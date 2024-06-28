@@ -3,7 +3,7 @@
   import Button from '@shared/ui/components/Button.vue';
   import { onMounted, ref } from 'vue';
   import MegaPhoneIcon from '@/shared/ui/icon/MegaPhoneIcon.vue';
-  const props = defineProps(['PROFILE_TEXT_LIST', 'CONTENT_TEXT_LIST', 'PEROPD_TEXT', 'PROFILE_IMAGE_URL', 'EVENT_IMAGE_URL', 'theme']);
+  const props = defineProps(['PROFILE_TEXT_LIST', 'CONTENT_TEXT_LIST', 'PEROPD_TEXT', 'PROFILE_IMAGE_URL', 'EVENT_IMAGE_URL', 'theme', 'ref']);
   const themeRef = ref(null);
   const getTheme = () => {
     if (!props.theme) return { buttonStyle: 'white-text-yellow-green lg', themeStyle: 'yellow-green-theme' };
@@ -20,7 +20,7 @@
 </script>
 
 <template>
-  <article :class="themeRef.themeStyle">
+  <article ref="ref" :class="themeRef.themeStyle">
     <div class="header">
       <div class="header-image-container">
         <img :src="PROFILE" alt="베어리스타" :class="themeRef.themeStyle" />
@@ -40,7 +40,7 @@
         <div></div>
         <img :src="EVENT_MAIN" alt="이벤트 이미지" />
       </div>
-      <Button lable="시작하기" :class="themeRef.buttonStyle" />
+      <Button style="width: 100%" lable="시작하기" :class="themeRef.buttonStyle" />
     </div>
   </article>
 </template>
@@ -83,11 +83,12 @@
     color: white;
     display: flex;
     flex-direction: column;
+
     gap: 15px;
     padding: 20px;
   }
   .body-image-container {
-    width: 240px;
+    width: 100%;
     height: 230px;
     position: relative;
   }
