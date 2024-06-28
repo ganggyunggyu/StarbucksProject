@@ -164,3 +164,8 @@ input::placeholder {
     --font-size-3xl: 22px;
   }
 }
+
+.swiper .swiper-pagination {
+  position: fixed;
+  bottom: 0;
+}
