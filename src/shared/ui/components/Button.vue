@@ -45,7 +45,7 @@
     color: white;
   }
   .gray-text-dark-gray {
-    background-color: var(--color-gray);
+    background-color: var(--color-light-gray);
     color: var(--color-dark-gray);
   }
   .gray-text-white {
@@ -59,5 +59,7 @@
   .lg {
     width: 240px;
     height: 50px;
+    font-size: var(--font-size-lg);
+    font-weight: 700;
   }
 </style>

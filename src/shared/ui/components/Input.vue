@@ -1,12 +1,12 @@
 <script setup>
-  const props = defineProps(['lable', 'class', 'warring', 'type']);
+  const props = defineProps(['lable', 'class', 'warring', 'type', 'placeholder']);
   const isWarring = !!props.warring;
 </script>
 
 <template>
   <form>
     <label for="">{{ lable }}</label>
-    <input :class="class" :type="type ? type : 'text'" />
+    <input :placeholder="placeholder" :class="class" :type="type ? type : 'text'" />
     <p :class="isWarring ? '' : 'hide'">{{ props.warring }}</p>
   </form>
 </template>
@@ -18,7 +18,7 @@
     flex-direction: column;
     width: 240px;
     padding: 12px 0px;
-    font-size: var(--font-size-sm);
+    font-size: var(--font-size-md);
   }
   label {
     color: var(--color-gray);

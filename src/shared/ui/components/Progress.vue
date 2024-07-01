@@ -1,21 +1,20 @@
 <script setup>
   import { onMounted, ref } from 'vue';
 
-  const props = defineProps(['textList']);
+  const props = defineProps(['textList', 'color']);
   const value = ref(0);
   const intervalId = ref(null);
 
   onMounted(() => {
     intervalId.value = setInterval(() => {
       value.value++;
-      console.log(value);
       if (value.value > 100) clearInterval(intervalId.value);
     }, 30);
   });
 </script>
 <template>
   <div>
-    <progress :value="value" min="0" max="100"></progress>
+    <progress :class="color && color" :value="value" min="0" max="100"></progress>
     <div class="text-container">
       <p v-for="p in textList">{{ p }}</p>
     </div>
@@ -39,6 +38,9 @@
     height: 28px;
     width: 48px;
   }
+  .red::-webkit-progress-value {
+    background-color: var(--color-red);
+  }
   .text-container {
     display: flex;
     flex-direction: column;
@@ -47,5 +49,8 @@
     margin-top: 10px;
     font-size: var(--font-size-md);
     line-height: 20px;
+  }
+  p {
+    opacity: 0.6;
   }
 </style>
