@@ -9,12 +9,41 @@
   import 'swiper/css/navigation';
   import { Pagination, Navigation } from 'swiper/modules';
   const modules = [Pagination, Navigation];
+  const backgroundRef = ref(null);
 
-  const cardList = ref([
-    { index: 0, theme: 'red' },
-    { index: 1, theme: 'mint' },
-    { index: 2, theme: 'yellow-green' },
-  ]);
+  const EVENT_LIST = [
+    {
+      id: 0,
+      theme: 'red',
+      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
+      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
+      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
+    },
+    {
+      id: 1,
+      theme: 'mint',
+
+      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
+      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
+      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
+    },
+    {
+      id: 2,
+      theme: 'yellow-green',
+      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
+      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
+      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
+    },
+  ];
+
+  const changeBackground = (value) => {
+    backgroundRef.value = value;
+  };
+  // const option = {};
+
+  // const observer = new IntersectionObserver(changeBackground, option);
+
+  // observer.observe(backgroundRef.value);
 </script>
 
 <template>
@@ -36,8 +65,8 @@
       :slideActiveClass="'swiper-slide-center'"
       class="scroll"
     >
-      <swiper-slide v-for="(card, index) in cardList" :key="index" class="swiper-slide-none">
-        <EventItem :theme="card.theme" />
+      <swiper-slide v-for="(card, index) in EVENT_LIST" :key="index" class="swiper-slide-none">
+        <EventItem :ref="backgroundRef" :theme="card.theme" :eventInfo="card" :changeBackground="changeBackground" />
       </swiper-slide>
     </swiper>
   </main>
