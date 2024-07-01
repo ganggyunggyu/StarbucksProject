@@ -1,22 +1,26 @@
 <script setup>
-  import { EVENT_MAIN, PROFILE } from '@/constant/IMAGE_URL';
-  import Button from '@shared/ui/components/Button.vue';
   import { onMounted, ref } from 'vue';
+  import router from '@/router';
+
+  import { EVENT_MAIN, PROFILE } from '@/constant/IMAGE_URL';
+
+  import { getTheme } from '@/shared/lib/getTheme';
+
   import MegaPhoneIcon from '@/shared/ui/icon/MegaPhoneIcon.vue';
-  const props = defineProps(['PROFILE_TEXT_LIST', 'CONTENT_TEXT_LIST', 'PEROPD_TEXT', 'PROFILE_IMAGE_URL', 'EVENT_IMAGE_URL', 'theme', 'ref']);
+  import Button from '@shared/ui/components/Button.vue';
+
+  const props = defineProps(['theme', 'eventInfo', 'changeBackground']);
   const themeRef = ref(null);
-  const getTheme = () => {
-    if (!props.theme) return { buttonStyle: 'white-text-yellow-green lg', themeStyle: 'yellow-green-theme' };
-    if (props.theme === 'red') return { buttonStyle: 'white-text-red lg', themeStyle: 'red-theme' };
-    if (props.theme === 'mint') return { buttonStyle: 'white-text-mint lg', themeStyle: 'mint-theme' };
-    if (props.theme === 'yellow-green') return { buttonStyle: 'white-text-yellow-green lg', themeStyle: 'yellow-green-theme' };
+
+  const handleStart = () => {
+    router.replace({ name: 'Loading', state: { redirectPoint: 'capture' } });
   };
 
-  const TEXT_LIST = ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'];
-  const CONTENT_LIST = ['베어리스타', '댄스 챌린지'];
-  const PERIOD = '기간 : 3/14(목) ~ 4/10(수)';
-
-  themeRef.value = getTheme();
+  const { TEXT_LIST, CONTENT_LIST, PERIOD } = props.eventInfo;
+  themeRef.value = getTheme(props.theme);
+  onMounted(() => {
+    console.log(props.eventInfo);
+  });
 </script>
 
 <template>
@@ -40,7 +44,7 @@
         <div></div>
         <img :src="EVENT_MAIN" alt="이벤트 이미지" />
       </div>
-      <Button style="width: 100%" lable="시작하기" :class="themeRef.buttonStyle" />
+      <Button @click="handleStart" style="width: 100%" lable="시작하기" :class="themeRef.buttonStyle" />
     </div>
   </article>
 </template>
