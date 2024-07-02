@@ -1,25 +1,23 @@
 <script setup>
   import CaptureActionButton from '@/entities/ui/capture/CaptureActionButton.vue';
-  import { ref } from 'vue';
-  const props = defineProps(['setCaptureComplate']);
-  const typeRef = ref(0);
-  console.log(props);
-  const step = () => {
-    typeRef.value = typeRef.value + 1;
-    console.log(typeRef.value);
-  };
+
+  const props = defineProps(['handleIsCapture', 'captureStep', 'handleNextStep', 'handlePrevStep']);
 </script>
 <template>
-  <main>
-    <div v-if="typeRef === 2" class="guide-time">00:05</div>
-    <CaptureActionButton v-if="typeRef === 0" @click-center="step" :type="typeRef" />
-    <CaptureActionButton v-if="typeRef === 1" @click-left="step" @click-right="step" :type="typeRef" />
-    <CaptureActionButton v-if="typeRef === 2" @click-left="" @click-right="setCaptureComplate" :type="typeRef" />
-    <div v-if="typeRef === 2" class="guide-text">영상 생성 중</div>
+  <main class="main-container">
+    <transition name="opacity">
+      <div v-if="captureStep === 2" class="guide-time">00:05</div>
+    </transition>
+    <CaptureActionButton v-if="captureStep === 0" @click-center="handleNextStep" :type="captureStep" />
+    <CaptureActionButton v-if="captureStep === 1" @click-left="handleNextStep" @click-right="" :type="captureStep" />
+    <CaptureActionButton v-if="captureStep === 2" @click-left="handlePrevStep" @click-right="handleIsCapture" :type="captureStep" />
+    <transition name="opacity">
+      <div v-if="captureStep === 2" class="guide-text">영상 생성 중</div>
+    </transition>
   </main>
 </template>
 <style scoped>
-  main {
+  .main-container {
     width: 100%;
     display: flex;
     align-items: center;

@@ -1,36 +1,32 @@
 <script setup>
-  import { onMounted, ref } from 'vue';
+  import { onMounted, onUnmounted, ref, watch } from 'vue';
   import router from '@/router';
-
   import { EVENT_MAIN, PROFILE } from '@/constant/IMAGE_URL';
-
   import { getTheme } from '@/shared/lib/getTheme';
-
   import MegaPhoneIcon from '@/shared/ui/icon/MegaPhoneIcon.vue';
   import Button from '@shared/ui/components/Button.vue';
-
+  import useTyping from '@/entities/hooks/useTyping';
   const props = defineProps(['theme', 'eventInfo', 'changeBackground']);
+
   const themeRef = ref(null);
 
   const handleStart = () => {
-    router.replace({ name: 'Loading', state: { redirectPoint: 'capture' } });
+    router.push({ name: 'Loading', state: { redirectPoint: 'capture', eventId: props.eventInfo.id } });
   };
 
   const { TEXT_LIST, CONTENT_LIST, PERIOD } = props.eventInfo;
   themeRef.value = getTheme(props.theme);
-  onMounted(() => {
-    console.log(props.eventInfo);
-  });
+  const { textRef } = useTyping(TEXT_LIST.join('\n'));
 </script>
 
 <template>
-  <article ref="ref" :class="themeRef.themeStyle">
+  <article class="event-item-container" :class="themeRef.themeStyle">
     <div class="header">
       <div class="header-image-container">
         <img :src="PROFILE" alt="베어리스타" :class="themeRef.themeStyle" />
       </div>
       <div class="text-container">
-        <p v-for="p in TEXT_LIST">{{ p }}</p>
+        <p v-html="textRef"></p>
       </div>
       <MegaPhoneIcon />
     </div>
@@ -59,9 +55,9 @@
   .red-theme {
     background-color: var(--color-red);
   }
-  article {
+  .event-item-container {
     width: 300px;
-    height: 530px;
+    height: calc(79 * var(--vh));
     border-radius: 20px;
   }
   .header {
