@@ -1,3 +1,5 @@
+@layer reset, base, tokens, recipes, utilities;
+
 @font-face {
   font-family: 'Pretendard-Regular';
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
@@ -120,12 +122,12 @@ input::placeholder {
   color: inherit;
   opacity: 0.5;
 }
-.opacity-modal-enter-active,
-.opacity-modal-leave-active {
+.opacity-enter-active,
+.opacity-leave-active {
   transition: opacity 0.5s ease;
 }
-.opacity-modal-enter-from,
-.opacity-modal-leave-to {
+.opacity-enter-from,
+.opacity-leave-to {
   opacity: 0;
 }
 .f-w {
