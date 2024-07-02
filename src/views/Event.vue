@@ -1,74 +1,60 @@
 <script setup>
+  import 'swiper/swiper-bundle.css';
   import { ref } from 'vue';
   import EventItem from '@/entities/ui/event/EventItem.vue';
   import CloseIcon from '@/shared/ui/icon/CloseIcon.vue';
   import Logo from '@/shared/ui/icon/Logo.vue';
   import { Swiper, SwiperSlide } from 'swiper/vue';
-  import 'swiper/css';
-  import 'swiper/css/pagination';
-  import 'swiper/css/navigation';
-  import { Pagination, Navigation } from 'swiper/modules';
-  const modules = [Pagination, Navigation];
-  const backgroundRef = ref(null);
+  import { Pagination, Navigation, Scrollbar, A11y } from 'swiper/modules';
+  import { EVENT_LIST, TEMP_CARD } from '@/constant/TEXT_LIST';
 
-  const EVENT_LIST = [
-    {
-      id: 0,
-      theme: 'red',
-      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
-      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
-      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
-    },
-    {
-      id: 1,
-      theme: 'mint',
-
-      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
-      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
-      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
-    },
-    {
-      id: 2,
-      theme: 'yellow-green',
-      TEXT_LIST: ['베어리스타와 함께 춤을!', '베어리스타 댄스를 함께 추고', '챌린지에도 참여해 봐! ♬'],
-      CONTENT_LIST: ['베어리스타', '댄스 챌린지'],
-      PERIOD: '기간 : 3/14(목) ~ 4/10(수)',
-    },
-  ];
+  const backgroundRef = ref('bg-red');
+  const currIndex = ref(0);
+  const isTempCard = ref(true);
 
   const changeBackground = (value) => {
     backgroundRef.value = value;
   };
-  // const option = {};
 
-  // const observer = new IntersectionObserver(changeBackground, option);
+  const setBackground = (index) => {
+    if (index === 0) return 'bg-red';
+    if (index === 1) return 'bg-mint';
+    if (index === 2) return 'bg-yellow-green';
+  };
 
-  // observer.observe(backgroundRef.value);
+  const onSlideChange = (swiper) => {
+    currIndex.value = swiper.realIndex;
+    backgroundRef.value = setBackground(currIndex.value);
+    if (currIndex.value !== 0) isTempCard.value = false;
+  };
 </script>
 
 <template>
-  <main class="bg-yellow-green">
+  <main :class="backgroundRef">
     <header>
       <Logo width="56px" height="56px" />
       <CloseIcon />
     </header>
     <swiper
-      :slidesPerView="'1.25'"
+      ref="swiperRef"
+      :slidesPerView="'1.3'"
       :spaceBetween="0"
       :loop="true"
       :pagination="{
         clickable: true,
       }"
       :centeredSlides="true"
-      :modules="modules"
+      :modules="[Navigation, Pagination, Scrollbar, A11y]"
       :initialSlide="0"
       :slideActiveClass="'swiper-slide-center'"
+      @slideChange="onSlideChange"
       class="scroll"
     >
       <swiper-slide v-for="(card, index) in EVENT_LIST" :key="index" class="swiper-slide-none">
         <EventItem :ref="backgroundRef" :theme="card.theme" :eventInfo="card" :changeBackground="changeBackground" />
       </swiper-slide>
     </swiper>
+    <EventItem v-if="isTempCard" class="temp-card swiper-slide-none" :ref="backgroundRef" :theme="TEMP_CARD.theme" :eventInfo="TEMP_CARD" :changeBackground="changeBackground" />
   </main>
 </template>
 
@@ -77,9 +63,13 @@
     width: calc(100 * var(--vw));
     height: calc(100 * var(--vh));
   }
+  .temp-card {
+    position: fixed;
+    right: -255px;
+    top: calc(13 * var(--vh));
+  }
 
   .swiper-slide {
-    /* Center slide text vertically */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -110,14 +100,6 @@
     width: 100%;
     gap: 30px;
   }
-  .group {
-    display: flex;
-    overflow-x: scroll;
-    width: 100%;
-    gap: 10px;
-    scroll-snap-type: x mandatory;
-  }
-
   .bg-red {
     background-color: var(--bg-red);
   }
@@ -126,26 +108,5 @@
   }
   .bg-mint {
     background-color: var(--bg-mint);
-  }
-  .indicators {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 10px;
-  }
-
-  .dot {
-    width: 8px;
-    height: 8px;
-    background-color: var(--color-gray);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-
-  .dot.active {
-    background-color: white;
   }
 </style>

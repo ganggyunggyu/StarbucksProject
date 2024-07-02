@@ -3,21 +3,14 @@
   import Progress from '@shared/ui/components/Progress.vue';
   import { onMounted, onUnmounted, ref } from 'vue';
   import router from '@/router';
-
+  import { EVENT_LOADING_INFO_LIST } from '@/constant/TEXT_LIST';
   const timerRef = ref(null);
-  const IMAGE = new URL('../static/resource/latte.png', import.meta.url).href;
   const props = defineProps(['EVENT_INFO', 'redirectPoint']);
-  const CONSTANT = {
-    THEME: 'bg-mint',
-    ENG_TITLE: 'MEET THE BLOOMING MOMENT',
-    KO_TITLE: ['베어리스타와 함께 만나는', '블루밍 모먼트'],
-    IMAGE: IMAGE,
-    CONTENT: ['벚꽃이 피는 계절엔', '슈크림 라뗴와 함께!'],
-  };
-  const { redirectPoint } = history.state;
-  console.log(history.state);
+
+  const { redirectPoint, eventId } = history.state;
+  const CONSTANT = EVENT_LOADING_INFO_LIST[eventId];
+
   onMounted(() => {
-    console.log(history.state);
     timerRef.value = setTimeout(() => {
       router.push(redirectPoint);
     }, 3000);
