@@ -1,7 +1,5 @@
 <script setup>
   const props = defineProps(['ICONS']);
-
-  //ICONS : [name : '', component: c, label: '', onClick: f]
 </script>
 
 <template>

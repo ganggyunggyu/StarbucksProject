@@ -6,17 +6,19 @@
   const isTutorial = ref(true);
 </script>
 <template>
-  <div v-if="isTutorial" @click="isTutorial = false" class="tutorial">
-    <article>
-      <CloseIcon />
-      <div>
-        <img :src="PROFILE" alt="" />
-      </div>
-      <div>
-        <p v-for="p in TUTORIAL_TEXT_LIST">{{ p }}</p>
-      </div>
-    </article>
-  </div>
+  <transition name="opacity">
+    <div v-if="isTutorial" @click="isTutorial = false" class="tutorial">
+      <article>
+        <CloseIcon />
+        <div>
+          <img :src="PROFILE" alt="" />
+        </div>
+        <div>
+          <p v-for="p in TUTORIAL_TEXT_LIST">{{ p }}</p>
+        </div>
+      </article>
+    </div>
+  </transition>
 </template>
 <style scoped>
   .tutorial {

@@ -8,6 +8,7 @@
   import { BACKGROUND_IMAGE } from '@/constant/IMAGE_URL';
   import { LANDING_TEXT_LIST } from '@/constant/TEXT_LIST';
   import router from '@/router';
+  import { css } from '../../styled-system/css';
 
   const isModal = ref(false);
 
@@ -37,7 +38,7 @@
       <Button lable="바로 시작하기" class="red lg" @click="openModal" />
       <Button lable="당첨 내역 확인" class="white-text-red lg" @click="redirectPrizePage" />
     </section>
-    <Transition name="opacity-modal">
+    <Transition name="opacity">
       <CodeModal v-if="isModal" @close="closeModal" />
     </Transition>
   </main>

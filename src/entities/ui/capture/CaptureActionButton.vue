@@ -1,10 +1,8 @@
 <script setup>
-  import { ref } from 'vue';
   import CaptureOnIcon from '@/shared/ui/icon/CaptureOnIcon.vue';
   import CaptureStopIcon from '@/shared/ui/icon/CaptureStopIcon.vue';
   import CaptureTempStopIcon from '@/shared/ui/icon/CaptureTempStopIcon.vue';
   const props = defineProps(['type', 'onClickCenter', 'onClickLeft', 'onClickRight']);
-  const typeRef = ref(null);
 </script>
 
 <template>

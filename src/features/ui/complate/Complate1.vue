@@ -20,14 +20,16 @@
       <p><span class="f-w">포토카드</span> 만들기</p>
     </section>
     <section class="photo-container">
-      <div>
-        <span class="photo-text">앞면 인쇄</span>
-        <img class="image-box" :src="POHTO_CARD_1" alt="" />
-      </div>
-      <div>
-        <span class="photo-text">뒷면 인쇄</span>
-        <img class="image-box" :src="POHTO_CARD_2" alt="" />
-      </div>
+      <transition-group name="opacity">
+        <div>
+          <span class="photo-text">앞면 인쇄</span>
+          <img class="image-box" :src="POHTO_CARD_1" alt="" />
+        </div>
+        <div>
+          <span class="photo-text">뒷면 인쇄</span>
+          <img class="image-box" :src="POHTO_CARD_2" alt="" />
+        </div>
+      </transition-group>
     </section>
     <section class="button-container">
       <Button @click="prev" lable="다시 촬영" class="gray-text-dark-gray lg" />
