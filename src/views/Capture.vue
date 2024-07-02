@@ -14,6 +14,13 @@
   import WarningModal from '@/entities/ui/modal/WarningModal.vue';
   import WarningModal2 from '@/entities/ui/modal/WarningModal2.vue';
 
+  import * as THREE from 'three';
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+  scene.add(camera);
+
   const isCapture = Vue.ref(false);
   const captureStep = Vue.ref(0);
   const isSharedModal = Vue.ref(false);
