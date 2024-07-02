@@ -32,8 +32,8 @@
 </template>
 <style scoped>
   .container {
-    width: 270px;
-    height: 310px;
+    width: 309px;
+    height: 345px;
     background-color: white;
     border-radius: 20px;
     position: relative;
@@ -41,14 +41,13 @@
     flex-direction: column;
     position: fixed;
     z-index: 999;
-    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
   .header {
     width: 100%;
-    height: 50px;
+    height: 60px;
     border-radius: 20px 20px 0 0;
     background-color: var(--color-red);
   }
@@ -60,9 +59,13 @@
   .body {
     display: flex;
     flex-direction: column;
-    align-items: start;
-    transform: translate(15px, 30px);
-    gap: 20px;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    height: 100%;
+  }
+  .text-container {
+    width: 80%;
   }
   .button-container {
     display: flex;

@@ -2,8 +2,24 @@
   import Button from '@shared/ui/components/Button.vue';
   import HashTag from '@/shared/ui/components/HashTag.vue';
   import CopyIcon from '@/shared/ui/icon/CopyIcon.vue';
-
+  const props = defineProps(['closeModal']);
+  console.log(props);
   const TAG_LIST = ['#블루밍모먼트', '#베어리스타', '#스타벅스AR'];
+  const copyTags = () => {
+    const tagsString = TAG_LIST.join(' ');
+    navigator.clipboard
+      .writeText(tagsString)
+      .then(() => {
+        window.alert('태그가 복사되었습니다 !');
+      })
+      .catch((err) => {
+        console.error('Failed to copy tags: ', err);
+      });
+  };
+
+  const handleShare = () => {
+    closeModal();
+  };
 </script>
 <template>
   <div class="container">
@@ -18,11 +34,11 @@
       <div class="hash-tag-comtainer">
         <HashTag v-for="tag in TAG_LIST" :lable="tag" />
       </div>
-      <div class="copy-container">
+      <div @click="copyTags" class="copy-container">
         <CopyIcon />
         <p class="copy-text">복사하기</p>
       </div>
-      <Button lable="공유하기" class="red lg" />
+      <Button @click="closeModal" lable="공유하기" class="red lg" />
     </div>
   </div>
 </template>
@@ -32,9 +48,13 @@
     height: 310px;
     background-color: white;
     border-radius: 20px;
-    position: relative;
-    display: flex;
+    position: fixed;
     flex-direction: column;
+    display: flex;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 998;
   }
   .header {
     width: 100%;

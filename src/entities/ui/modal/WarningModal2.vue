@@ -1,13 +1,19 @@
 <script setup>
-  import Input from '@/shared/ui/components/Input.vue';
   import Button from '@shared/ui/components/Button.vue';
   import Warring from '@shared/ui/icon/WarringIcon.vue';
   import CloseIcon from '@/shared/ui/icon/CloseIcon.vue';
+  import router from '@/router';
+
+  const props = defineProps(['closeModal', 'refreshCapture']);
+
+  const redirectEvent = () => {
+    router.push('event');
+  };
 </script>
 <template>
   <div class="container">
     <div class="header">
-      <CloseIcon />
+      <CloseIcon @click="closeModal" />
     </div>
     <div class="body">
       <div>
@@ -19,8 +25,8 @@
         <p>저장 및 공유는 촬영 후 사진, 영상 공유 화면에서 가능합니다.</p>
       </div>
       <div class="button-container">
-        <Button lable="처음부터 다시 시작" class="white-text-red lg" />
-        <Button lable="페이지 나가기" class="red lg" />
+        <Button @click="closeModal" lable="나가기 취소" class="gray-text-dark-gray lg" />
+        <Button @click="refreshCapture" lable="촬영 결과 페이지 나가기" class="red lg" />
       </div>
     </div>
   </div>
@@ -31,9 +37,13 @@
     height: 310px;
     background-color: white;
     border-radius: 20px;
-    position: relative;
     display: flex;
     flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
   }
   .text-container {
     font-size: var(--font-size-md);
@@ -60,5 +70,6 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    transform: translateY(15px);
   }
 </style>
