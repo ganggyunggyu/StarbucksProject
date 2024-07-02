@@ -8,3 +8,7 @@ export const POHTO_CARD_1 = new URL('../static/resource/photo_card_1.png', impor
 export const POHTO_CARD_2 = new URL('../static/resource/photo_card_2.png', import.meta.url).href;
 
 export const CAPTURE_BACKGROUND_IMAGE = new URL('../static/resource/background_image.png', import.meta.url).href;
+
+export const LATTE_IMAGE = new URL('../static/resource/latte.png', import.meta.url).href;
+export const FLOWER_IMAGE = new URL('../static/resource/flower.png', import.meta.url).href;
+export const BEARISTA_IMAGE = new URL('../static/resource/Bearista .png', import.meta.url).href;
