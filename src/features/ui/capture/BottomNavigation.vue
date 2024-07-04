@@ -1,5 +1,5 @@
 <script setup>
-  const props = defineProps(['ICONS']);
+const props = defineProps(['ICONS']);
 </script>
 
 <template>
@@ -12,24 +12,25 @@
 </template>
 
 <style scoped>
-  nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    height: calc(19 * var(--vh));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background-color: white;
-  }
-  nav button {
-    flex: 1;
-    line-height: 25px;
-    font-size: var(--font-size-md);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
+nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: calc(19 * var(--vh));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: white;
+  z-index: 1;
+}
+nav button {
+  flex: 1;
+  line-height: 25px;
+  font-size: var(--font-size-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 </style>

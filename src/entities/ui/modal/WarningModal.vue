@@ -1,14 +1,17 @@
 <script setup>
-  import Button from '@shared/ui/components/Button.vue';
-  import Warring from '@shared/ui/icon/WarringIcon.vue';
-  import CloseIcon from '@/shared/ui/icon/CloseIcon.vue';
-  import router from '@/router';
+import Button from '@shared/ui/components/Button.vue';
+import Warring from '@shared/ui/icon/WarringIcon.vue';
+import CloseIcon from '@/shared/ui/icon/CloseIcon.vue';
+import router from '@/router';
+import useExperience from '@/shared/hooks/useExperience';
+const { refresh } = useExperience();
 
-  const props = defineProps(['closeModal', 'refreshCapture']);
+const props = defineProps(['closeModal', 'refreshCapture']);
 
-  const redirectEvent = () => {
-    router.push('event');
-  };
+const redirectEvent = () => {
+  router.push('event');
+  refresh();
+};
 </script>
 <template>
   <div class="container">
@@ -32,44 +35,44 @@
   </div>
 </template>
 <style scoped>
-  .container {
-    width: 270px;
-    height: 310px;
-    background-color: white;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 999;
-  }
-  .text-container {
-    font-size: var(--font-size-md);
-    line-height: 22px;
-  }
-  .header svg {
-    color: white;
-    font-size: var(--font-size-sm);
-    position: absolute;
-    right: 10px;
-    top: 10px;
-  }
-  .body {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: start;
-    justify-content: center;
-    gap: 5px;
-    padding: 13px;
-  }
-  .button-container {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transform: translateY(15px);
-  }
+.container {
+  width: 270px;
+  height: 310px;
+  background-color: white;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+}
+.text-container {
+  font-size: var(--font-size-md);
+  line-height: 22px;
+}
+.header svg {
+  color: white;
+  font-size: var(--font-size-sm);
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+.body {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  gap: 5px;
+  padding: 13px;
+}
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transform: translateY(15px);
+}
 </style>
