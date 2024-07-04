@@ -140,10 +140,12 @@ export function init() {
     const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
     if (model) {
-      console.log(pos);
-      console.log(mouse);
       model.position.copy(pos);
       model.rotation.set(0, 0, 0);
+
+      console.log(pos);
+      console.log(mouse);
+      console.log(model.position);
     }
   });
   const getStream = async () => {
