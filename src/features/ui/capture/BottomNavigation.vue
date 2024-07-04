@@ -25,7 +25,11 @@
   }
   nav button {
     flex: 1;
-    line-height: 20px;
+    line-height: 25px;
     font-size: var(--font-size-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 </style>

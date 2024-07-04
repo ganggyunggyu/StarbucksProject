@@ -13,7 +13,7 @@
   import { onBeforeRouteLeave } from 'vue-router';
   import WarningModal from '@/entities/ui/modal/WarningModal.vue';
   import WarningModal2 from '@/entities/ui/modal/WarningModal2.vue';
-
+  import ArCapture from '@/features/ui/capture/ArCapture.vue';
   const isCapture = Vue.ref(false);
   const captureStep = Vue.ref(0);
   const isSharedModal = Vue.ref(false);
@@ -75,16 +75,7 @@
     <Tutorial />
     <BottomNavigation v-if="isCapture" :ICONS="ICONS" />
   </transition-group>
-
-  <img class="frame" :src="CAPTURE_BACKGROUND_IMAGE" alt="" />
-
+  <ArCapture />
   <CaptureActionForm v-if="!isCapture" :handleIsCapture="handleIsCapture" :captureStep="captureStep" :handleNextStep="handleNextStep" :handlePrevStep="handlePrevStep" />
 </template>
-<style scoped>
-  .frame {
-    width: 100%;
-    height: calc(100 * var(--vh));
-    z-index: -1;
-    position: fixed;
-  }
-</style>
+<style scoped></style>
