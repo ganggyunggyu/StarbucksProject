@@ -9,6 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "lil-gui": "^0.19.2",
+    "pinia": "^2.1.7",
     "swiper": "^11.1.4",
     "three": "^0.166.0",
     "vue": "^3.4.29",

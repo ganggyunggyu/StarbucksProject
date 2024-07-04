@@ -47,6 +47,9 @@ const useExperience = () => {
 
   onMounted(() => {
     console.log('Experience Mount!');
+    const canvas = document.createElement('canvas');
+    canvas.className = 'webgl';
+    document.body.appendChild(canvas);
 
     experience = new Experience(document.querySelector('.webgl'), saveImage);
   });
