@@ -10,9 +10,17 @@ import Resources from './Utils/Resources.js';
 
 import sources from './sources.js';
 
+/**
+ * @type {(id:number, src:string,name:string)=> void }
+ */
 let instance = null;
 
 export default class Experience {
+  /**
+   *
+   * @param {HTMLCanvasElement} _canvas
+   * @param  {(id:number, src:string,name:string)=> void } saveImageCallback
+   */
   constructor(_canvas, saveImageCallback) {
     // Singleton
     if (instance) {
@@ -43,11 +51,9 @@ export default class Experience {
     this.textureKeys = [];
 
     if (this.canvas) {
-      this.canvas.addEventListener(
-        'touchstart',
-        this._checkForModelClick.bind(this),
-        { passive: true },
-      );
+      this.canvas.addEventListener('touchstart', this._checkForModelClick.bind(this), {
+        passive: true,
+      });
     }
 
     this.bindMethods();
@@ -135,16 +141,11 @@ export default class Experience {
 
     this.raycaster.setFromCamera(this.mouse, this.camera.instance);
 
-    const intersects = this.raycaster.intersectObjects(
-      this.scene.children,
-      true,
-    ); // recursive search through all children
+    const intersects = this.raycaster.intersectObjects(this.scene.children, true); // recursive search through all children
 
     for (let i = 0; i < intersects.length; i++) {
       for (let j = 0; j < this.clickedObject.length; j++) {
-        if (
-          this._isObjectChildOf(intersects[i].object, this.clickedObject[j])
-        ) {
+        if (this._isObjectChildOf(intersects[i].object, this.clickedObject[j])) {
           if (intersects[i].object.name === 'stickers') {
             this.world.sticker.isMoving = true;
           }

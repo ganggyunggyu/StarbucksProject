@@ -1,81 +1,116 @@
 <script setup>
-  import BottomNavigation from '../features/ui/capture/BottomNavigation.vue';
-  import RefreshIcon from '@shared/ui/icon/RefreshIcon.vue';
-  import SaveIcon from '@shared/ui/icon/SaveIcon.vue';
-  import PhotoCardIcon from '@shared/ui/icon/PhotoCardIcon.vue';
-  import ShareIcon from '@shared/ui/icon/ShareIcon.vue';
-  import { CAPTURE_BACKGROUND_IMAGE } from '@/constant/IMAGE_URL';
-  import * as Vue from 'vue';
-  import CaptureActionForm from '@/features/ui/capture/CaptureActionForm.vue';
-  import Tutorial from '@/features/ui/capture/Tutorial.vue';
-  import router from '@/router';
-  import ShareModal from '@/entities/ui/modal/ShareModal.vue';
-  import { onBeforeRouteLeave } from 'vue-router';
-  import WarningModal from '@/entities/ui/modal/WarningModal.vue';
-  import WarningModal2 from '@/entities/ui/modal/WarningModal2.vue';
-  import ArCapture from '@/features/ui/capture/ArCapture.vue';
-  const isCapture = Vue.ref(false);
-  const captureStep = Vue.ref(0);
-  const isSharedModal = Vue.ref(false);
-  const isWarningModal = Vue.ref(false);
-  const isWarningModal2 = Vue.ref(false);
+import BottomNavigation from '../features/ui/capture/BottomNavigation.vue';
+import RefreshIcon from '@shared/ui/icon/RefreshIcon.vue';
+import SaveIcon from '@shared/ui/icon/SaveIcon.vue';
+import PhotoCardIcon from '@shared/ui/icon/PhotoCardIcon.vue';
+import ShareIcon from '@shared/ui/icon/ShareIcon.vue';
+import * as Vue from 'vue';
+import CaptureActionForm from '@/features/ui/capture/CaptureActionForm.vue';
+import Tutorial from '@/features/ui/capture/Tutorial.vue';
+import router from '@/router';
+import ShareModal from '@/entities/ui/modal/ShareModal.vue';
+import { onBeforeRouteLeave } from 'vue-router';
+import WarningModal from '@/entities/ui/modal/WarningModal.vue';
+import WarningModal2 from '@/entities/ui/modal/WarningModal2.vue';
+import ArCapture from '@/features/ui/capture/ArCapture.vue';
+import Loading from './Loading.vue';
+import useExperience from '@/shared/hooks/useExperience';
 
-  const handleSave = () => {
-    console.log('저장 버튼 클릭됨');
-  };
-  const redirectComplate = () => {
-    router.push('complate');
-  };
-  const toggleIsShare = () => {
-    isSharedModal.value = !isSharedModal.value;
-  };
-  const toggleIsWarning = () => {
-    isWarningModal.value = !isWarningModal.value;
-  };
-  const handleFirstStep = () => {
-    isWarningModal.value = false;
-    isWarningModal2.value = false;
-    isCapture.value = false;
-    captureStep.value = 0;
-  };
-  const toggleIsWarning2 = () => {
-    isWarningModal2.value = !isWarningModal2.value;
-  };
-  const handleNextStep = () => {
-    captureStep.value = captureStep.value + 1;
-  };
-  const handlePrevStep = () => {
-    captureStep.value = captureStep.value - 1;
-  };
-  const handleIsCapture = () => {
-    isCapture.value = true;
-  };
+const { isLoading } = useExperience();
+const isCapture = Vue.ref(false);
+const captureStep = Vue.ref(0);
+const isSharedModal = Vue.ref(false);
+const isWarningModal = Vue.ref(false);
+const isWarningModal2 = Vue.ref(false);
 
-  const ICONS = [
-    { name: 'RefreshIcon', component: RefreshIcon, label: '다시 촬영', onClick: toggleIsWarning2 },
-    { name: 'SaveIcon', component: SaveIcon, label: '저장', onClick: handleSave },
-    { name: 'PhotoCardIcon', component: PhotoCardIcon, label: '포토카드', onClick: redirectComplate },
-    { name: 'ShareIcon', component: ShareIcon, label: '공유', onClick: toggleIsShare },
-  ];
+const handleSave = () => {
+  console.log('저장 버튼 클릭됨');
+};
+const redirectComplate = () => {
+  router.push('complate');
+};
+const toggleIsShare = () => {
+  isSharedModal.value = !isSharedModal.value;
+};
+const toggleIsWarning = () => {
+  isWarningModal.value = !isWarningModal.value;
+};
+const handleFirstStep = () => {
+  isWarningModal.value = false;
+  isWarningModal2.value = false;
+  isCapture.value = false;
+  captureStep.value = 0;
+};
+const toggleIsWarning2 = () => {
+  isWarningModal2.value = !isWarningModal2.value;
+};
+const handleNextStep = () => {
+  captureStep.value = captureStep.value + 1;
+};
+const handlePrevStep = () => {
+  captureStep.value = captureStep.value - 1;
+};
+const handleIsCapture = () => {
+  isCapture.value = true;
+};
 
-  onBeforeRouteLeave((to) => {
-    if (to.name === 'Complate') return true;
-    if (to.name === 'Event') return true;
-    if (isCapture.value) isWarningModal2.value = true;
-    if (!isCapture.value) isWarningModal.value = true;
-    isSharedModal.value = false;
-    return false;
+const ICONS = [
+  { name: 'RefreshIcon', component: RefreshIcon, label: '다시 촬영', onClick: toggleIsWarning2 },
+  { name: 'SaveIcon', component: SaveIcon, label: '저장', onClick: handleSave },
+  { name: 'PhotoCardIcon', component: PhotoCardIcon, label: '포토카드', onClick: redirectComplate },
+  { name: 'ShareIcon', component: ShareIcon, label: '공유', onClick: toggleIsShare },
+];
+
+Vue.onMounted(() => {
+  // 현재 상태를 푸시합니다.
+  history.pushState(null, null, location.href);
+
+  window.addEventListener('popstate', function (event) {
+    // 뒤로 가기 버튼을 눌렀을 때 다시 현재 URL로 상태를 푸시하여 리프레시를 방지합니다.
+    console.log(event);
+    history.pushState(null, null, location.href);
+    toggleIsWarning();
   });
+});
+
+onBeforeRouteLeave((to) => {
+  // if (to.name === 'Complate') return true;
+  // if (to.name === 'Event') return true;
+  if (isWarningModal.value && to.name === 'Event') return true;
+  if (isCapture.value) isWarningModal2.value = true;
+  if (!isCapture.value) isWarningModal.value = true;
+  isSharedModal.value = false;
+  return false;
+});
 </script>
 <template>
+  <Loading v-if="isLoading" eventId="0" />
   <transition-group name="opacity">
     <ShareModal v-if="isSharedModal" :closeModal="toggleIsShare" />
-    <WarningModal v-if="isWarningModal" :closeModal="toggleIsWarning" :refreshCapture="handleFirstStep" />
-    <WarningModal2 v-if="isWarningModal2" :closeModal="toggleIsWarning2" :refreshCapture="handleFirstStep" />
-    <Tutorial />
+    <WarningModal
+      v-if="isWarningModal"
+      :closeModal="toggleIsWarning"
+      :refreshCapture="handleFirstStep"
+    />
+    <WarningModal2
+      v-if="isWarningModal2"
+      :closeModal="toggleIsWarning2"
+      :refreshCapture="handleFirstStep"
+    />
+    <Tutorial v-if="!isLoading" />
     <BottomNavigation v-if="isCapture" :ICONS="ICONS" />
   </transition-group>
   <ArCapture />
-  <CaptureActionForm v-if="!isCapture" :handleIsCapture="handleIsCapture" :captureStep="captureStep" :handleNextStep="handleNextStep" :handlePrevStep="handlePrevStep" />
+  <CaptureActionForm
+    v-if="!isCapture"
+    :handleIsCapture="handleIsCapture"
+    :captureStep="captureStep"
+    :handleNextStep="handleNextStep"
+    :handlePrevStep="handlePrevStep"
+  />
 </template>
-<style scoped></style>
+<style scoped>
+.hidden {
+  display: none;
+}
+</style>

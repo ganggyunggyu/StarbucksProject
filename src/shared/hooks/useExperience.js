@@ -1,7 +1,7 @@
 import Experience from '@/ar/capture/Experience';
 import router from '@/router/index';
 import { useImageDataStore } from '@/stores/imageData';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted } from 'vue';
 import { onBeforeRouteLeave } from 'vue-router';
 
 const useExperience = () => {
@@ -10,6 +10,7 @@ const useExperience = () => {
   const setFrameSrc = ref(null);
   const selectedCharacter = ref(false);
   const selectedSticker = ref(false);
+  const isLoading = ref(true);
   const playAudio = () => {
     console.debug('audio');
   };
@@ -17,9 +18,12 @@ const useExperience = () => {
   const saveImage = (image) => {
     const imageDataStore = useImageDataStore();
     imageDataStore.setImageData(image);
-    let canvas = document.querySelector('.webgl');
-    let width = canvas.style.width;
-    let height = canvas.style.height;
+    /**
+     * @type {HTMLCanvasElement}
+     */
+    const canvas = document.querySelector('.webgl');
+    const width = canvas.style.width;
+    const height = canvas.style.height;
     imageDataStore.setCanvasSize(width, height);
 
     router.push({ path: '/complate' });
@@ -44,21 +48,27 @@ const useExperience = () => {
     selectedSticker.value = image.id;
     selectedCharacter.value = false;
   };
+  const refresh = () => {
+    console.log(experience);
+  };
 
   onMounted(() => {
     console.log('Experience Mount!');
-    const canvas = document.createElement('canvas');
-    canvas.className = 'webgl';
-    document.body.appendChild(canvas);
+    // const div = document.createElement('div');
+    // const canvas = document.createElement('canvas');
+    // div.className = 'webgl-container';
+    // canvas.className = 'webgl';
+    // document.body.appendChild(canvas);
 
     experience = new Experience(document.querySelector('.webgl'), saveImage);
-  });
-  onUnmounted(() => {
-    console.log('Experience UnMount!');
+    const resources = experience.resources;
+
+    resources.on('ready', () => {
+      isLoading.value = false;
+    });
   });
 
   onBeforeRouteLeave(() => {
-    console.log('Experience Route Leave!');
     experience.destroy();
     experience.dispose();
     experience.init();
@@ -71,6 +81,8 @@ const useExperience = () => {
     setFrame,
     saveImage,
     experience,
+    isLoading,
+    refresh,
   };
 };
 

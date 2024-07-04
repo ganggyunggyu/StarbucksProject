@@ -7,7 +7,6 @@ import Complate from '@views/Complate.vue';
 const routes = [
   { path: '/', component: Landing, name: 'Landing' },
   { path: '/event', component: Event, name: 'Event' },
-  { path: '/loading', component: Loading, name: 'Loading' },
   { path: '/capture', component: Capture, name: 'Capture' },
   { path: '/complate', component: Complate, name: 'Complate' },
 ];
