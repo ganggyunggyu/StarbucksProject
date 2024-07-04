@@ -1,16 +1,15 @@
 import * as THREE from 'three';
 
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-import { EXRLoader } from 'three/examples/jsm/loaders/EXRLoader.js';
 
 import * as SkeletonUtils from 'three/examples/jsm/utils/SkeletonUtils.js';
 
 let camera, scene, renderer;
 let video, videoTexture, videoMaterial;
 let mouse;
-let scale;
 let model;
 let items = [];
+let scale;
 let x, y;
 
 const source = {
@@ -134,7 +133,7 @@ export function init() {
     mouse.x = (x / canvas.clientWidth) * 2 - 1;
     mouse.y = -(y / canvas.clientHeight) * 2 + 1;
 
-    const vector = new THREE.Vector3(mouse.x, mouse.y, 1).unproject(camera);
+    const vector = new THREE.Vector3(mouse.x, mouse.y, 0).unproject(camera);
     const dir = vector.sub(camera.position).normalize();
     const distance = -camera.position.z / dir.z;
     const pos = camera.position.clone().add(dir.multiplyScalar(distance));
@@ -142,10 +141,6 @@ export function init() {
     if (model) {
       model.position.copy(pos);
       model.rotation.set(0, 0, 0);
-
-      console.log(pos);
-      console.log(mouse);
-      console.log(model.position);
     }
   });
   const getStream = async () => {
