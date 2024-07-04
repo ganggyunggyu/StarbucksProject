@@ -2,9 +2,13 @@
 
 @font-face {
   font-family: 'Pretendard-Regular';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+    format('woff');
   font-weight: 400;
   font-style: normal;
+}
+body {
+  touch-action: none;
 }
 
 * {
@@ -173,4 +177,14 @@ input::placeholder {
 .swiper .swiper-pagination {
   position: fixed;
   bottom: 0;
+}
+input,
+textarea,
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border-radius: 0;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
