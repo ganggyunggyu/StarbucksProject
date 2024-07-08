@@ -42,7 +42,7 @@
   main {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     gap: calc(3 * var(--vh));
     transform: translateY(calc(5 * var(--vh)));
@@ -54,7 +54,9 @@
   }
   .photo-container {
     display: flex;
+    justify-content: space-between;
     gap: 20px;
+    width: 80%;
   }
   .photo-text {
     color: var(--color-gray);
