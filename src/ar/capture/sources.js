@@ -74,6 +74,11 @@ export default [
     type: 'texture',
     path: 'public/resource/character/Uno_EntireBody.png',
   },
+  {
+    name: 'footprint',
+    type: 'exr',
+    path: 'public/resource/exr/footprint.exr',
+  },
   // {
   //     name: 'environmentMapTexture',
   //     type: 'cubeTexture',
